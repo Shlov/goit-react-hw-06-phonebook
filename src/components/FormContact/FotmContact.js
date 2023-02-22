@@ -2,8 +2,12 @@ import { Button } from "components/ListContacts/ListContacts.styled";
 import { useState } from "react";
 import { Input , Label, Form} from "./FormContact.styled";
 import PropTypes from 'prop-types';
+import { useDispatch } from "react-redux";
+import { addContact } from "components/Redux/contactsSlice";
 
-export const FormContact = ({onAddContact}) => {
+export const FormContact = () => {
+
+  const dispatch = useDispatch();
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -18,7 +22,8 @@ export const FormContact = ({onAddContact}) => {
 
   const transferContact = (evnt) => {
     evnt.preventDefault();
-    onAddContact(name, number)
+    // onAddContact(name, number)
+    dispatch(addContact(name, number));
     evnt.target.reset()
   }
 
