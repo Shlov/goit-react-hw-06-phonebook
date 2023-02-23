@@ -2,28 +2,35 @@ import { Button } from "components/ListContacts/ListContacts.styled";
 import { useState } from "react";
 import { Input , Label, Form} from "./FormContact.styled";
 import PropTypes from 'prop-types';
-import { useDispatch } from "react-redux";
-import { addContact } from "components/Redux/contactsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addContact } from "Redux/contactsSlice";
+import { getContacts } from "Redux/selectors";
 
 export const FormContact = () => {
 
   const dispatch = useDispatch();
+  const contacts = useSelector(getContacts).items;
 
-  const [name, setName] = useState('');
+  const [nameNewContact, setNameNewContact] = useState('');
   const [number, setNumber] = useState('');
 
   const recordName = (evnt) => {
-    setName(evnt.target.value)
+    setNameNewContact(evnt.target.value)
   }
   
   const recordNumber = (evnt) => {
     setNumber(evnt.target.value)
   }
 
+
   const transferContact = (evnt) => {
     evnt.preventDefault();
-    // onAddContact(name, number)
-    dispatch(addContact(name, number));
+    const include = contacts.some(({name}) => name.toLowerCase() === nameNewContact.toLowerCase())
+    if (include) {
+      return alert(`${nameNewContact} is already in contacts.`)
+    } else {
+      dispatch(addContact(nameNewContact, number));
+    }
     evnt.target.reset()
   }
 
