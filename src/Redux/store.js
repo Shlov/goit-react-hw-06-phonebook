@@ -20,13 +20,13 @@ const persistConfig = {
 }
 
 const persistedContactsReducer = persistReducer(persistConfig, contactsReducer)
-const persistedFilterReducer = persistReducer(persistConfig, filterReducer)
+// const persistedFilterReducer = persistReducer(persistConfig, filterReducer)
 
 
 export const store = configureStore({
   reducer: {
     contacts: persistedContactsReducer,
-    filter: persistedFilterReducer,
+    filter: filterReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
